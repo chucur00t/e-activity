@@ -221,12 +221,12 @@
                     deskripsiJabatan: "TATA KELOLA DAN TATA LAKSANA TEKNOLOGI INFORMASI; INFRASTRUKTUR TEKNOLOGI INFORMASI; SISTEM INFORMASI DAN MULTIMEDIA"
                 },
                 kepala_dinas: {
-                    nama: "DR. H. ANI SOFIAN, M.M.",
-                    nip: "197001011995031001",
+                    nama: "-",
+                    nip: "-",
                     jabatan: "KEPALA DINAS",
                     pangkat: "PEMBINA UTAMA / IV E",
-                    gelarDepan: "DR. H.",
-                    gelarBelakang: "M.M.",
+                    gelarDepan: "-",
+                    gelarBelakang: "-",
                     jenisPegawai: "PNS",
                     unitKerja: "DINAS KOMUNIKASI DAN INFORMATIKA",
                     tmtJabatan: "01/01/2022",
@@ -1317,8 +1317,31 @@
                 switchView('tambah-aktivitas-view');
             }
         }
+
+        // --- MODAL FUNCTIONS ---
+        function showMessage(message) {
+            document.getElementById('modal-message').textContent = message;
+            document.getElementById('message-modal').classList.remove('hidden');
+        }
+        window.closeModal = function() { document.getElementById('message-modal').classList.add('hidden'); }
+        function showConfirm(message, onConfirm) {
+            document.getElementById('confirm-message').textContent = message;
+            document.getElementById('confirm-modal').classList.remove('hidden');
+            confirmCallback = onConfirm;
+        }
+        function closeConfirm() {
+            document.getElementById('confirm-modal').classList.add('hidden');
+            confirmCallback = null;
+        }
+        document.getElementById('confirm-ok-btn').addEventListener('click', () => { if (confirmCallback) confirmCallback(); closeConfirm(); });
+        document.getElementById('confirm-cancel-btn').addEventListener('click', closeConfirm);
+
+        // --- STARTUP ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // All DOM elements are ready, safe to run the app logic
+        });
         
-        window.updateReportView = (period) => {
+        function updateReportView(period) {
             const selectedDate = new Date(document.getElementById('report-date').value + 'T00:00:00');
             const selectedPegawai = document.getElementById('report-pegawai').value;
 
@@ -1414,29 +1437,6 @@
                 progressBarContainer.innerHTML = `<p class="text-center text-slate-500">Tidak ada data untuk periode ini.</p>`;
             }
         }
-
-        // --- MODAL FUNCTIONS ---
-        function showMessage(message) {
-            document.getElementById('modal-message').textContent = message;
-            document.getElementById('message-modal').classList.remove('hidden');
-        }
-        window.closeModal = function() { document.getElementById('message-modal').classList.add('hidden'); }
-        function showConfirm(message, onConfirm) {
-            document.getElementById('confirm-message').textContent = message;
-            document.getElementById('confirm-modal').classList.remove('hidden');
-            confirmCallback = onConfirm;
-        }
-        function closeConfirm() {
-            document.getElementById('confirm-modal').classList.add('hidden');
-            confirmCallback = null;
-        }
-        document.getElementById('confirm-ok-btn').addEventListener('click', () => { if (confirmCallback) confirmCallback(); closeConfirm(); });
-        document.getElementById('confirm-cancel-btn').addEventListener('click', closeConfirm);
-
-        // --- STARTUP ---
-        document.addEventListener('DOMContentLoaded', () => {
-            // All DOM elements are ready, safe to run the app logic
-        });
 
     </script>
 </body>
