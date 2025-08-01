@@ -181,29 +181,104 @@
             </div>
         </div>
     </div>
+    <div id="profile-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
+        <div id="profile-modal-content" class="bg-slate-100 rounded-xl shadow-xl w-full max-w-4xl animate-fadeIn max-h-[90vh] overflow-y-auto">
+            <!-- Profile content will be injected here -->
+        </div>
+    </div>
 
     <!-- Main Application Script -->
     <script type="module">
         // --- DATABASE SIMULASI (PENGGANTI FIREBASE) ---
         const mockDatabase = {
+            profiles: {
+                staf: {
+                    nama: "CHINTAMY CHRISTINI",
+                    nip: "199311192019022007",
+                    jabatan: "PRANATA KOMPUTER AHLI PERTAMA / AHLI",
+                    pangkat: "PENATA MUDA TK I / III/B",
+                    gelarDepan: "-",
+                    gelarBelakang: "S.KOM",
+                    jenisPegawai: "PNS DO",
+                    unitKerja: "DINAS KOMUNIKASI DAN INFORMATIKA",
+                    tmtJabatan: "01/01/2024",
+                    tmtGolongan: "04/01/2024",
+                    jenisKelamin: "PEREMPUAN",
+                    deskripsiJabatan: "MELAKSANAKAN TUGAS SEBAGAI PRANATA KOMPUTER AHLI PERTAMA"
+                },
+                kabid: {
+                    nama: "REZA AFRIZAL",
+                    nip: "198004112005021003",
+                    jabatan: "KEPALA BIDANG APLIKASI INFORMATIKA",
+                    pangkat: "PEMBINA TINGKAT 1 / IV B",
+                    gelarDepan: "-",
+                    gelarBelakang: "S.PI, ME",
+                    jenisPegawai: "PNS",
+                    unitKerja: "DINAS KOMUNIKASI DAN INFORMATIKA",
+                    tmtJabatan: "01/01/2023",
+                    tmtGolongan: "04/01/2023",
+                    jenisKelamin: "LAKI-LAKI",
+                    deskripsiJabatan: "TATA KELOLA DAN TATA LAKSANA TEKNOLOGI INFORMASI; INFRASTRUKTUR TEKNOLOGI INFORMASI; SISTEM INFORMASI DAN MULTIMEDIA"
+                },
+                kepala_dinas: {
+                    nama: "DR. H. ANI SOFIAN, M.M.",
+                    nip: "197001011995031001",
+                    jabatan: "KEPALA DINAS",
+                    pangkat: "PEMBINA UTAMA / IV E",
+                    gelarDepan: "DR. H.",
+                    gelarBelakang: "M.M.",
+                    jenisPegawai: "PNS",
+                    unitKerja: "DINAS KOMUNIKASI DAN INFORMATIKA",
+                    tmtJabatan: "01/01/2022",
+                    tmtGolongan: "04/01/2022",
+                    jenisKelamin: "LAKI-LAKI",
+                    deskripsiJabatan: "MEMIMPIN DINAS KOMUNIKASI DAN INFORMATIKA"
+                },
+                admin_pd: {
+                    nama: "ADMIN SISTEM",
+                    nip: "-",
+                    jabatan: "ADMINISTRATOR PERANGKAT DAERAH",
+                    pangkat: "-",
+                    gelarDepan: "",
+                    gelarBelakang: "",
+                    jenisPegawai: "ADMIN",
+                    unitKerja: "DINAS KOMUNIKASI DAN INFORMATIKA",
+                    tmtJabatan: "-",
+                    tmtGolongan: "-",
+                    jenisKelamin: "-",
+                    deskripsiJabatan: "MENGELOLA DATA MASTER DAN SISTEM E-ACTIVITY"
+                }
+            },
+            teamMembers: {
+                "Meidy Vinandar Pratama, S.STP": { nama: "MEIDY VINANDAR PRATAMA, S.STP", nip: "199001012010011001", jabatan: "STAF BIDANG APLIKASI INFORMATIKA", pangkat: "PENATA / III C" },
+                "Calvario Mandayu, S.STP, M.SI": { nama: "CALVARIO MANDAYU, S.STP, M.SI", nip: "199102022011021002", jabatan: "STAF BIDANG APLIKASI INFORMATIKA", pangkat: "PENATA / III C" },
+                "Arry Yosfani Alnur, S.Kom": { nama: "ARRY YOSFANI ALNUR, S.KOM", nip: "199203032012031003", jabatan: "STAF BIDANG APLIKASI INFORMATIKA", pangkat: "PENATA MUDA / III A" },
+                "Chintamy Christini S.Kom": { nama: "CHINTAMY CHRISTINI S.KOM", nip: "199311192019022007", jabatan: "STAF BIDANG APLIKASI INFORMATIKA", pangkat: "PENATA MUDA TK I / III/B" },
+                "MAULIDY AZHILLA, A.Md.Kom": { nama: "MAULIDY AZHILLA, A.Md.Kom", nip: "199501012020012001", jabatan: "STAF BIDANG APLIKASI INFORMATIKA", pangkat: "PENGATUR / II C" },
+                "EMRILLIZA AMARULHAQ, S.T": { nama: "EMRILLIZA AMARULHAQ, S.T", nip: "199602022021021002", jabatan: "STAF BIDANG APLIKASI INFORMATIKA", pangkat: "PENGATUR / II C" },
+            },
             rhk: [
                 { id: "rhk1", name: "Terselenggaranya Implementasi Tata Kelola SPBE atau Sistem Pemerintahan Berbasis Elektronik Yang Optimal" },
                 { id: "rhk2", name: "Meningkatnya Kualitas Layanan Publik Berbasis Digital" },
                 { id: "rhk3", name: "Terwujudnya Infrastruktur TIK yang Andal dan Aman" }
             ],
             tasks: [
-                { id: "tp1", name: "Menyusun surat dinas keluar (konsep)", duration: 60 },
-                { id: "tp2", name: "Membuat laporan rutin harian/mingguan", duration: 90 },
-                { id: "tp3", name: "Mengikuti rapat internal bidang/seksi", duration: 90 }
+                { id: "tp1", name: "Menyusun surat dinas keluar (konsep)", duration: 60, evidenceType: "Laporan Final" },
+                { id: "tp2", name: "Membuat laporan rutin harian/mingguan", duration: 90, evidenceType: "Laporan Final" },
+                { id: "tp3", name: "Mengikuti rapat internal bidang/seksi", duration: 90, evidenceType: "Notula Rapat" }
             ],
             tugasTambahan: [
-                { id: "tt1", name: "Rapat Koordinasi Lintas Sektor", duration: 120 },
-                { id: "tt2", name: "Menjadi Panitia Acara Kedinasan", duration: 180 }
+                { id: "tt1", name: "Rapat Koordinasi Lintas Sektor", duration: 120, evidenceType: "Undangan/Notula" },
+                { id: "tt2", name: "Menjadi Panitia Acara Kedinasan", duration: 180, evidenceType: "Surat Keputusan (SK)" }
             ],
             activities: [
-                { id: "act1", stafId: "staf-demo-01", stafName: "Citra Lestari", taskName: "Menyusun surat dinas keluar (konsep)", description: "Menyelesaikan draf laporan kinerja bulan Juli 2025.", startTime: "09:00", endTime: "11:30", status: "pending_validation", createdAt: new Date(), comment: null, evidence: "draft_surat_dinas.pdf", evidenceViewed: false },
-                { id: "act2", stafId: "staf-demo-02", stafName: "Eko Prasetyo", taskName: "Membuat laporan rutin harian/mingguan", description: "Materi untuk rapat dengan dinas terkait, perlu ditambahkan data infografis.", startTime: "13:00", endTime: "15:00", status: "needs_revision", createdAt: new Date(), comment: "Tolong tambahkan data infografis dari BPS.", evidence: "laporan_mingguan.pdf", evidenceViewed: false },
-                { id: "act3", stafId: "staf-demo-01", stafName: "Citra Lestari", taskName: "Mengikuti rapat internal bidang/seksi", description: "Rapat membahas progres proyek triwulan ketiga.", startTime: "10:00", endTime: "12:00", status: "completed", createdAt: new Date(), comment: null, evidence: "notula_rapat.pdf", evidenceViewed: true }
+                { id: "act1", stafId: "staf-demo-01", stafName: "Meidy Vinandar Pratama, S.STP", taskName: "Menyusun surat dinas keluar (konsep)", description: "Menyelesaikan draf laporan kinerja bulan Juli 2025.", startTime: "09:00", endTime: "11:30", status: "pending_validation", createdAt: new Date(new Date().setDate(new Date().getDate() - 1)), comment: null, evidence: "draft_surat_dinas.pdf", evidenceViewed: false },
+                { id: "act2", stafId: "staf-demo-02", stafName: "Calvario Mandayu, S.STP, M.SI", taskName: "Membuat laporan rutin harian/mingguan", description: "Materi untuk rapat dengan dinas terkait, perlu ditambahkan data infografis.", startTime: "13:00", endTime: "15:00", status: "needs_revision", createdAt: new Date(), comment: "Tolong tambahkan data infografis dari BPS.", evidence: "laporan_mingguan.pdf", evidenceViewed: false },
+                { id: "act3", stafId: "staf-demo-01", stafName: "Meidy Vinandar Pratama, S.STP", taskName: "Mengikuti rapat internal bidang/seksi", description: "Rapat membahas progres proyek triwulan ketiga.", startTime: "10:00", endTime: "12:00", status: "completed", createdAt: new Date(new Date().setDate(new Date().getDate() - 2)), comment: null, evidence: "notula_rapat.pdf", evidenceViewed: true },
+                { id: "act4", stafId: "staf-demo-02", stafName: "Calvario Mandayu, S.STP, M.SI", taskName: "Menyusun surat dinas keluar (konsep)", description: "Surat undangan rapat.", startTime: "08:00", endTime: "09:00", status: "completed", createdAt: new Date(new Date().setDate(new Date().getDate() - 8)), comment: null, evidence: "undangan.pdf", evidenceViewed: true },
+                { id: "act5", stafId: "staf-demo-01", stafName: "Arry Yosfani Alnur, S.Kom", taskName: "Membuat laporan rutin harian/mingguan", description: "Laporan mingguan TIK.", startTime: "14:00", endTime: "15:30", status: "completed", createdAt: new Date(new Date().setDate(new Date().getDate() - 10)), comment: null, evidence: "laporan_tik.pdf", evidenceViewed: true },
+                { id: "act6", stafId: "staf-demo-03", stafName: "Chintamy Christini S.Kom", taskName: "Mengikuti rapat internal bidang/seksi", description: "Rapat evaluasi bulanan.", startTime: "09:00", endTime: "10:30", status: "completed", createdAt: new Date(new Date().setDate(new Date().getDate() - 15)), comment: null, evidence: "evaluasi.pdf", evidenceViewed: true },
+                 { id: "act7", stafId: "staf-demo-01", stafName: "Meidy Vinandar Pratama, S.STP", taskName: "Membuat laporan rutin harian/mingguan", description: "Laporan harian.", startTime: "14:00", endTime: "15:30", status: "completed", createdAt: new Date(), comment: null, evidence: "laporan_harian.pdf", evidenceViewed: true },
             ],
             announcements: [
                 { id: "ann1", title: "Pengumuman Libur Nasional", content: "Diberitahukan kepada seluruh pegawai, bahwa dalam rangka memperingati Hari Kemerdekaan, tanggal 17 Agustus 2025 ditetapkan sebagai hari libur nasional.", author: "Admin PD", createdAt: new Date() }
@@ -216,6 +291,7 @@
         let charts = {};
         let confirmCallback = null;
         let revisionActivityId = null;
+        let activityToEdit = null;
 
         // --- ICONS & MENU DEFINITIONS ---
         const icons = {
@@ -260,6 +336,7 @@
         const openSidebarBtn = document.getElementById('open-sidebar-btn');
         const closeSidebarBtn = document.getElementById('close-sidebar-btn');
         const revisionModal = document.getElementById('revision-modal');
+        const profileModal = document.getElementById('profile-modal');
 
         // --- UI & APP LOGIC ---
         window.loginAs = (role) => {
@@ -271,6 +348,7 @@
         window.logout = () => {
             userRole = null;
             userId = null;
+            activityToEdit = null;
             showLoginView();
         };
 
@@ -282,6 +360,7 @@
             setupNotificationListener();
             setupSidebarToggle();
             setupRevisionModalListeners();
+            setupProfileModalListener();
         }
 
         function showLoginView() {
@@ -370,10 +449,17 @@
                         <div><h2 class="font-bold text-slate-500">Aktivitas Selesai</h2><p id="completed-count" class="text-3xl font-bold text-slate-800">0</p></div>
                     </div>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-md">
-                    <h2 class="text-xl font-bold text-slate-800 mb-4">Distribusi Status Aktivitas</h2>
-                    <div class="max-w-xs mx-auto"><canvas id="statusChart"></canvas></div>
-                </div>`;
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-md">
+                         <h2 class="text-xl font-bold text-slate-800 mb-4">Aktivitas Selesai per Staf (7 Hari Terakhir)</h2>
+                         <div class="h-80"><canvas id="weeklyPerformanceChart"></canvas></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <h2 class="text-xl font-bold text-slate-800 mb-4">Komposisi Status</h2>
+                        <div class="h-80 flex items-center justify-center"><canvas id="statusChart"></canvas></div>
+                    </div>
+                </div>
+                `;
             
             let pending = mockDatabase.activities.filter(a => a.status === 'pending_validation').length;
             let revision = mockDatabase.activities.filter(a => a.status === 'needs_revision').length;
@@ -383,17 +469,37 @@
             document.getElementById('revision-count').innerText = revision;
             document.getElementById('completed-count').innerText = completed;
             
-            const chartData = {
+            const statusChartData = {
                 labels: ['Menunggu Validasi', 'Perlu Perbaikan', 'Selesai'],
-                datasets: [{
-                    data: [pending, revision, completed],
-                    backgroundColor: ['#f59e0b', '#ef4444', '#16a34a'],
-                    hoverOffset: 4
-                }]
+                datasets: [{ data: [pending, revision, completed], backgroundColor: ['#f59e0b', '#ef4444', '#16a34a'], hoverOffset: 4 }]
             };
             if (charts.statusChart) charts.statusChart.destroy();
-            const ctx = document.getElementById('statusChart').getContext('2d');
-            charts.statusChart = new Chart(ctx, { type: 'doughnut', data: chartData, options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom' } } } });
+            const statusCtx = document.getElementById('statusChart').getContext('2d');
+            charts.statusChart = new Chart(statusCtx, { type: 'doughnut', data: statusChartData, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } } });
+            
+            // Weekly Performance Chart Data
+            const sevenDaysAgo = new Date(new Date().setDate(new Date().getDate() - 7));
+            const recentActivities = mockDatabase.activities.filter(a => a.status === 'completed' && a.createdAt >= sevenDaysAgo);
+            const performanceByStaff = {};
+            recentActivities.forEach(activity => {
+                const staffName = activity.stafName || 'Staf Anonim';
+                performanceByStaff[staffName] = (performanceByStaff[staffName] || 0) + 1;
+            });
+
+            const weeklyPerfData = {
+                labels: Object.keys(performanceByStaff),
+                datasets: [{
+                    label: 'Aktivitas Selesai',
+                    data: Object.values(performanceByStaff),
+                    backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                    borderColor: 'rgba(37, 99, 235, 1)',
+                    borderWidth: 1,
+                    borderRadius: 5
+                }]
+            };
+            if (charts.weeklyChart) charts.weeklyChart.destroy();
+            const weeklyCtx = document.getElementById('weeklyPerformanceChart').getContext('2d');
+            charts.weeklyChart = new Chart(weeklyCtx, { type: 'bar', data: weeklyPerfData, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }, plugins: { legend: { display: false } } } });
         }
 
         function renderPengumuman(element) {
@@ -423,7 +529,7 @@
             element.innerHTML = `
                 <div class="bg-white p-8 rounded-xl shadow-md max-w-3xl mx-auto">
                     <div class="text-center border-b pb-4 mb-8">
-                        <h1 class="text-2xl font-bold text-slate-800">Formulir Aktivitas Harian</h1>
+                        <h1 id="form-title" class="text-2xl font-bold text-slate-800">Formulir Aktivitas Harian</h1>
                         <div class="flex justify-center items-center gap-4 mt-2 text-sm text-slate-500">
                             <span>Jam Masuk: <b class="text-green-600">07.15 WIB</b></span>
                             <span>Jam Pulang: <b class="text-red-600">15.45 WIB</b></span>
@@ -459,11 +565,11 @@
                              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 <div>
                                     <label for="start-time" class="block font-medium mb-2 text-slate-700">Jam Mulai <span class="text-red-500">*</span></label>
-                                    <div class="relative"><input type="time" id="start-time" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition" required><svg class="w-5 h-5 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
+                                    <div class="relative"><input type="time" id="start-time" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition" required><i class="fa-regular fa-clock text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"></i></div>
                                 </div>
                                 <div>
                                     <label for="end-time" class="block font-medium mb-2 text-slate-700">Jam Selesai (Otomatis)</label>
-                                    <div class="relative"><input type="time" id="end-time" class="w-full p-3 border border-slate-300 rounded-lg bg-slate-100 focus:outline-none transition" readonly><svg class="w-5 h-5 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
+                                    <div class="relative"><input type="time" id="end-time" class="w-full p-3 border border-slate-300 rounded-lg bg-slate-100 focus:outline-none transition" readonly><i class="fa-regular fa-clock text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"></i></div>
                                 </div>
                             </div>
                         </div>
@@ -473,7 +579,7 @@
                             <div>
                                 <label for="evidence-file" class="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-lg cursor-pointer bg-slate-50 hover:bg-slate-100 transition">
                                     <div id="upload-prompt" class="flex flex-col items-center justify-center pt-5 pb-6">
-                                        <svg class="w-8 h-8 mb-4 text-slate-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/></svg>
+                                        <i class="fa-solid fa-cloud-arrow-up text-4xl text-slate-500 mb-3"></i>
                                         <p class="mb-2 text-sm text-slate-500"><span class="font-semibold text-blue-600">Unggah file</span> atau seret dan lepas</p>
                                         <p class="text-xs text-slate-500">Hanya file PDF, hingga 5MB</p>
                                     </div>
@@ -485,7 +591,7 @@
 
                         <div class="flex justify-end gap-4 pt-4 border-t">
                             <button type="button" id="cancel-btn" class="bg-white hover:bg-slate-100 text-slate-700 font-bold py-2 px-6 rounded-lg border border-slate-300 transition-all">Batal</button>
-                            <button type="submit" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-all">Simpan Aktivitas</button>
+                            <button type="submit" id="submit-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-all">Simpan Aktivitas</button>
                         </div>
                     </form>
                 </div>
@@ -501,6 +607,8 @@
             const evidenceInput = element.querySelector('#evidence-file');
             const uploadPrompt = element.querySelector('#upload-prompt');
             const fileNameDisplay = element.querySelector('#file-name-display');
+            const formTitle = element.querySelector('#form-title');
+            const submitBtn = element.querySelector('#submit-btn');
 
             function calculateEndTime() {
                 const startTimeValue = startTimeInput.value;
@@ -552,10 +660,18 @@
             startTimeInput.addEventListener('input', calculateEndTime);
             tugasPokokSelect.addEventListener('change', calculateEndTime);
 
+            if (activityToEdit) {
+                formTitle.textContent = "Perbaiki Aktivitas";
+                submitBtn.textContent = "Update Aktivitas";
+                // Pre-fill logic here
+                startTimeInput.value = activityToEdit.startTime;
+                // You would pre-fill other fields like RHK, Tugas Pokok etc. here
+            }
+
             if (form) {
                 form.addEventListener('submit', (e) => {
                     e.preventDefault();
-                    if (evidenceInput.files.length === 0) {
+                    if (evidenceInput.files.length === 0 && !activityToEdit) { // Only require file for new submissions
                         showMessage("Harap unggah bukti dukung.");
                         return;
                     }
@@ -571,17 +687,31 @@
                         return;
                     }
 
-                    showMessage("Aktivitas berhasil disimpan (simulasi).");
-                    form.reset();
-                    endTimeInput.value = '';
-                    uploadPrompt.classList.remove('hidden');
-                    fileNameDisplay.classList.add('hidden');
+                    if (activityToEdit) {
+                        // Update logic
+                        const activity = mockDatabase.activities.find(a => a.id === activityToEdit.id);
+                        activity.status = 'pending_validation';
+                        activity.comment = null;
+                        // update other fields...
+                        showMessage("Aktivitas berhasil diupdate.");
+                        activityToEdit = null;
+                        switchView('aktivitas-saya-view');
+                    } else {
+                        // Create new logic
+                        showMessage("Aktivitas berhasil disimpan (simulasi).");
+                        form.reset();
+                        endTimeInput.value = '';
+                        uploadPrompt.classList.remove('hidden');
+                        fileNameDisplay.classList.add('hidden');
+                    }
                 });
                 element.querySelector('#cancel-btn').addEventListener('click', () => {
                     form.reset();
                     endTimeInput.value = '';
                     uploadPrompt.classList.remove('hidden');
                     fileNameDisplay.classList.add('hidden');
+                    activityToEdit = null;
+                    switchView('aktivitas-saya-view');
                 });
             }
         }
@@ -624,47 +754,84 @@
         }
 
         function renderLaporan(element) {
-            element.innerHTML = `<h1 class="text-3xl font-bold mb-6 text-slate-900">Laporan Kinerja</h1>
-            <div class="bg-white p-6 rounded-xl shadow-md">
-                <h2 class="text-xl font-bold text-slate-800 mb-4">Jumlah Aktivitas per Staf</h2>
-                <div class="h-80"><canvas id="laporanChart"></canvas></div>
-            </div>`;
+            element.innerHTML = `<h1 class="text-3xl font-bold mb-6 text-slate-900">Laporan & Statistik</h1>
+            <div class="flex flex-wrap justify-between items-center mb-6 gap-4">
+                <div id="report-tabs" class="flex items-center gap-2">
+                    <button data-period="daily" class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg">Harian</button>
+                    <button data-period="weekly" class="bg-white hover:bg-slate-200 text-slate-700 font-semibold py-2 px-4 rounded-lg">Mingguan</button>
+                    <button data-period="monthly" class="bg-white hover:bg-slate-200 text-slate-700 font-semibold py-2 px-4 rounded-lg">Bulanan</button>
+                </div>
+                <div class="flex items-center gap-4">
+                    <select id="report-pegawai" class="p-2 border border-slate-300 rounded-lg text-sm">
+                        <option value="all">Semua Pegawai</option>
+                    </select>
+                    <input type="date" id="report-date" class="p-2 border border-slate-300 rounded-lg text-sm">
+                </div>
+            </div>
 
-            const activitiesByStaff = {};
-            mockDatabase.activities.filter(a => a.status === 'completed').forEach(activity => {
-                const staffName = activity.stafName || 'Staf Anonim';
-                activitiesByStaff[staffName] = (activitiesByStaff[staffName] || 0) + 1;
+            <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                <div class="bg-white p-4 rounded-xl shadow-md"><p class="text-sm text-slate-500">Total Aktivitas</p><p id="kpi-total" class="text-2xl font-bold text-slate-800">0</p></div>
+                <div class="bg-white p-4 rounded-xl shadow-md"><p class="text-sm text-slate-500">Disetujui</p><p id="kpi-approved" class="text-2xl font-bold text-green-600">0</p></div>
+                <div class="bg-white p-4 rounded-xl shadow-md"><p class="text-sm text-slate-500">Menunggu</p><p id="kpi-pending" class="text-2xl font-bold text-yellow-500">0</p></div>
+                <div class="bg-white p-4 rounded-xl shadow-md"><p class="text-sm text-slate-500">Ditolak</p><p id="kpi-rejected" class="text-2xl font-bold text-red-500">0</p></div>
+            </div>
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div class="bg-white p-4 rounded-xl shadow-md"><p class="text-sm text-slate-500">Capaian Terendah</p><div id="kpi-lowest"></div></div>
+                <div class="bg-white p-4 rounded-xl shadow-md"><p class="text-sm text-slate-500">Aktivitas Tertinggi</p><div id="kpi-highest"></div></div>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-md">
+                <h2 id="progress-title" class="text-xl font-bold text-slate-800 mb-4">Pencapaian Waktu Kerja Staf</h2>
+                <div id="progress-bar-container" class="space-y-6"></div>
+            </div>
+            `;
+            
+            const datePicker = document.getElementById('report-date');
+            datePicker.valueAsDate = new Date();
+
+            const pegawaiSelect = document.getElementById('report-pegawai');
+            const staffNames = [...new Set(mockDatabase.activities.map(a => a.stafName))];
+            pegawaiSelect.innerHTML = '<option value="all">Semua Pegawai</option>';
+            staffNames.forEach(name => {
+                pegawaiSelect.innerHTML += `<option value="${name}">${name}</option>`;
+            });
+
+            const reportTabs = document.getElementById('report-tabs');
+            reportTabs.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') {
+                    reportTabs.querySelectorAll('button').forEach(btn => {
+                        btn.className = "bg-white hover:bg-slate-200 text-slate-700 font-semibold py-2 px-4 rounded-lg";
+                    });
+                    e.target.className = "bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg";
+                    updateReportView(e.target.dataset.period);
+                }
+            });
+
+            datePicker.addEventListener('change', () => {
+                const activePeriod = reportTabs.querySelector('.bg-blue-600').dataset.period;
+                updateReportView(activePeriod);
+            });
+            pegawaiSelect.addEventListener('change', () => {
+                const activePeriod = reportTabs.querySelector('.bg-blue-600').dataset.period;
+                updateReportView(activePeriod);
             });
             
-            const chartData = {
-                labels: Object.keys(activitiesByStaff),
-                datasets: [{
-                    label: 'Aktivitas Selesai',
-                    data: Object.values(activitiesByStaff),
-                    backgroundColor: 'rgba(37, 99, 235, 0.8)',
-                    borderColor: 'rgba(37, 99, 235, 1)',
-                    borderWidth: 1,
-                    borderRadius: 5
-                }]
-            };
-            if (charts.laporanChart) charts.laporanChart.destroy();
-            const ctx = document.getElementById('laporanChart').getContext('2d');
-            charts.laporanChart = new Chart(ctx, { type: 'bar', data: chartData, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } }, plugins: { legend: { display: false } } } });
+            updateReportView('daily'); // Initial render
         }
         
         function renderAktivitasSaya(element) {
              element.innerHTML = `<h1 class="text-3xl font-bold mb-6 text-slate-900">Aktivitas Saya</h1>
              <div class="space-y-6">
                 <div>
-                    <h2 class="text-lg font-semibold text-slate-700 mb-2">Menunggu Validasi</h2>
+                    <h2 class="text-lg font-semibold text-slate-700 mb-2 flex items-center gap-2"><i class="fa-solid fa-hourglass-half text-yellow-500"></i> Menunggu Validasi</h2>
                     <div id="pending-list" class="space-y-3"></div>
                 </div>
                 <div>
-                    <h2 class="text-lg font-semibold text-slate-700 mb-2">Perlu Perbaikan</h2>
+                    <h2 class="text-lg font-semibold text-slate-700 mb-2 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation text-red-500"></i> Perlu Perbaikan</h2>
                     <div id="revision-list" class="space-y-3"></div>
                 </div>
                 <div>
-                    <h2 class="text-lg font-semibold text-slate-700 mb-2">Selesai</h2>
+                    <h2 class="text-lg font-semibold text-slate-700 mb-2 flex items-center gap-2"><i class="fa-solid fa-check-double text-green-500"></i> Selesai</h2>
                     <div id="completed-list" class="space-y-3"></div>
                 </div>
              </div>`;
@@ -679,44 +846,52 @@
             const revision = myActivities.filter(a => a.status === 'needs_revision');
             const completed = myActivities.filter(a => a.status === 'completed');
 
-            pendingList.innerHTML = pending.length === 0 ? `<p class="text-sm text-slate-500">Tidak ada.</p>` : '';
+            pendingList.innerHTML = pending.length === 0 ? `<p class="text-sm text-slate-500 pl-1">Tidak ada aktivitas.</p>` : '';
             pending.forEach(activity => pendingList.innerHTML += createActivityCard(activity));
             
-            revisionList.innerHTML = revision.length === 0 ? `<p class="text-sm text-slate-500">Tidak ada.</p>` : '';
+            revisionList.innerHTML = revision.length === 0 ? `<p class="text-sm text-slate-500 pl-1">Tidak ada aktivitas.</p>` : '';
             revision.forEach(activity => revisionList.innerHTML += createActivityCard(activity));
 
-            completedList.innerHTML = completed.length === 0 ? `<p class="text-sm text-slate-500">Tidak ada.</p>` : '';
+            completedList.innerHTML = completed.length === 0 ? `<p class="text-sm text-slate-500 pl-1">Tidak ada aktivitas.</p>` : '';
             completed.forEach(activity => completedList.innerHTML += createActivityCard(activity));
         }
 
         function createActivityCard(activity) {
+            const isRevisable = activity.status === 'needs_revision' && userRole === 'staf';
             return `
                 <div class="kanban-card status-${activity.status} bg-white p-4 rounded-lg shadow-sm">
-                    <p class="font-bold text-slate-800">${activity.taskName}</p>
-                    ${activity.status === 'needs_revision' && activity.comment ? `<p class="text-sm text-red-600 mt-2 p-2 bg-red-50 rounded-md"><b>Catatan:</b> ${activity.comment}</p>` : ''}
-                    <p class="text-xs text-slate-500 mt-2">Waktu: <b>${activity.startTime} - ${activity.endTime}</b></p>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-slate-800">${activity.taskName}</p>
+                            ${activity.status === 'needs_revision' && activity.comment ? `<p class="text-sm text-red-600 mt-2 p-2 bg-red-50 rounded-md"><b>Catatan:</b> ${activity.comment}</p>` : ''}
+                            <p class="text-xs text-slate-500 mt-2">Waktu: <b>${activity.startTime} - ${activity.endTime}</b></p>
+                        </div>
+                        ${isRevisable ? `<button onclick="window.editActivity('${activity.id}')" class="bg-blue-100 text-blue-700 text-xs font-bold py-1 px-3 rounded-lg hover:bg-blue-200 ml-4">Perbaiki</button>` : ''}
+                    </div>
                 </div>
             `;
         }
 
         function renderTimKerja(element) {
-             element.innerHTML = `<div class="bg-white p-8 rounded-xl shadow-md">
-                <h1 class="text-3xl font-bold mb-6 text-slate-900">Tim Kerja</h1>
-                <div class="space-y-4">
-                    <div class="flex items-center gap-4 bg-slate-50 p-4 rounded-lg">
-                        <img src="https://placehold.co/48x48/7e22ce/ffffff?text=AS" class="w-12 h-12 rounded-full" alt="Foto Profil">
-                        <div><p class="font-bold text-slate-800">Dr. H. Ani Sofian, M.M.</p><p class="text-sm text-slate-500">Kepala Dinas</p></div>
+             element.innerHTML = `
+             <h1 class="text-3xl font-bold mb-6 text-slate-900">Tim Kerja Bidang Aplikasi Informatika</h1>
+             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+                ${Object.keys(mockDatabase.teamMembers).map(name => {
+                    const member = mockDatabase.teamMembers[name];
+                    const initials = member.nama.split(' ').map(n => n[0]).join('');
+                    return `
+                    <div class="bg-white p-6 rounded-xl shadow-md text-center transition-all hover:shadow-lg hover:-translate-y-1">
+                        <div class="w-24 h-24 rounded-full bg-slate-200 flex items-center justify-center mx-auto mb-4">
+                            <span class="text-3xl font-bold text-slate-600">${initials}</span>
+                        </div>
+                        <h3 class="font-bold text-slate-800">${member.nama}</h3>
+                        <p class="text-sm text-slate-500">${member.jabatan}</p>
+                        <button onclick="window.showProfileModal('${name}')" class="mt-4 w-full bg-blue-100 text-blue-700 font-semibold py-2 px-4 rounded-lg hover:bg-blue-200 transition-colors">Lihat Profil</button>
                     </div>
-                    <div class="flex items-center gap-4 bg-slate-50 p-4 rounded-lg">
-                        <img src="https://placehold.co/48x48/1e40af/ffffff?text=BS" class="w-12 h-12 rounded-full" alt="Foto Profil">
-                        <div><p class="font-bold text-slate-800">Budi Santoso, S.Kom.</p><p class="text-sm text-slate-500">Kepala Bidang TIK</p></div>
-                    </div>
-                    <div class="flex items-center gap-4 bg-slate-50 p-4 rounded-lg">
-                        <img src="https://placehold.co/48x48/166534/ffffff?text=CL" class="w-12 h-12 rounded-full" alt="Foto Profil">
-                        <div><p class="font-bold text-slate-800">Citra Lestari, A.Md.</p><p class="text-sm text-slate-500">Staf Bidang TIK</p></div>
-                    </div>
-                </div>
-            </div>`;
+                    `
+                }).join('')}
+             </div>
+             `;
         }
 
         function renderPengaturan(element) {
@@ -734,18 +909,22 @@
                 <!-- Kelola Tugas Pokok -->
                 <div class="bg-white p-8 rounded-xl shadow-md">
                     <h2 class="text-xl font-bold mb-4 text-slate-800">Kelola Tugas Pokok</h2>
-                    <form id="add-task-form" class="flex gap-2 mb-6">
-                        <input type="text" id="new-task-name" placeholder="Nama tugas pokok baru..." class="flex-grow p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition" required>
-                        <button type="submit" class="bg-blue-600 text-white font-bold py-3 px-5 rounded-lg hover:bg-blue-700 transition-all">Tambah</button>
+                    <form id="add-task-form" class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                        <input type="text" id="new-task-name" placeholder="Nama tugas pokok..." class="md:col-span-2 p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition" required>
+                        <input type="number" id="new-task-duration" placeholder="Estimasi (menit)" class="p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition" required>
+                        <input type="text" id="new-task-evidence" placeholder="Jenis Bukti Dukung" class="p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition" required>
+                        <button type="submit" class="md:col-span-4 bg-blue-600 text-white font-bold py-3 px-5 rounded-lg hover:bg-blue-700 transition-all">Tambah Tugas Pokok</button>
                     </form>
                     <div id="task-list" class="space-y-2"></div>
                 </div>
                  <!-- Kelola Tugas Tambahan -->
                 <div class="bg-white p-8 rounded-xl shadow-md">
                     <h2 class="text-xl font-bold mb-4 text-slate-800">Kelola Tugas Tambahan</h2>
-                    <form id="add-extra-task-form" class="flex gap-2 mb-6">
-                        <input type="text" id="new-extra-task-name" placeholder="Nama tugas tambahan baru..." class="flex-grow p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition" required>
-                        <button type="submit" class="bg-blue-600 text-white font-bold py-3 px-5 rounded-lg hover:bg-blue-700 transition-all">Tambah</button>
+                    <form id="add-extra-task-form" class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                        <input type="text" id="new-extra-task-name" placeholder="Nama tugas tambahan..." class="md:col-span-2 p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition" required>
+                        <input type="number" id="new-extra-task-duration" placeholder="Estimasi (menit)" class="p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition" required>
+                        <input type="text" id="new-extra-task-evidence" placeholder="Jenis Bukti Dukung" class="p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition" required>
+                        <button type="submit" class="md:col-span-4 bg-blue-600 text-white font-bold py-3 px-5 rounded-lg hover:bg-blue-700 transition-all">Tambah Tugas Tambahan</button>
                     </form>
                     <div id="extra-task-list" class="space-y-2"></div>
                 </div>
@@ -781,16 +960,20 @@
                 mockDatabase.tasks.forEach(item => {
                     const el = document.createElement('div');
                     el.className = 'flex justify-between items-center bg-slate-100 hover:bg-slate-200 p-3 rounded-lg transition-colors';
-                    el.innerHTML = `<span class="text-slate-700 font-medium">${item.name}</span><button onclick="window.deleteItem('tasks', '${item.id}')" class="text-red-500 hover:text-red-700 font-semibold transition-colors">Hapus</button>`;
+                    el.innerHTML = `<div><p class="text-slate-700 font-medium">${item.name}</p><p class="text-xs text-slate-500">Estimasi: ${item.duration} menit | Bukti: ${item.evidenceType}</p></div><button onclick="window.deleteItem('tasks', '${item.id}')" class="text-red-500 hover:text-red-700 font-semibold transition-colors flex-shrink-0 ml-4">Hapus</button>`;
                     taskListEl.appendChild(el);
                 });
             }
             addTaskForm.addEventListener('submit', e => {
                 e.preventDefault();
-                const input = element.querySelector('#new-task-name');
-                if (input.value.trim()) {
-                    mockDatabase.tasks.push({ id: `task${Date.now()}`, name: input.value.trim(), duration: 60 }); // Default duration
-                    input.value = '';
+                const nameInput = element.querySelector('#new-task-name');
+                const durationInput = element.querySelector('#new-task-duration');
+                const evidenceInput = element.querySelector('#new-task-evidence');
+                if (nameInput.value.trim() && durationInput.value && evidenceInput.value.trim()) {
+                    mockDatabase.tasks.push({ id: `task${Date.now()}`, name: nameInput.value.trim(), duration: parseInt(durationInput.value), evidenceType: evidenceInput.value.trim() });
+                    nameInput.value = '';
+                    durationInput.value = '';
+                    evidenceInput.value = '';
                     refreshTaskList();
                 }
             });
@@ -803,16 +986,20 @@
                 mockDatabase.tugasTambahan.forEach(item => {
                     const el = document.createElement('div');
                     el.className = 'flex justify-between items-center bg-slate-100 hover:bg-slate-200 p-3 rounded-lg transition-colors';
-                    el.innerHTML = `<span class="text-slate-700 font-medium">${item.name}</span><button onclick="window.deleteItem('tugasTambahan', '${item.id}')" class="text-red-500 hover:text-red-700 font-semibold transition-colors">Hapus</button>`;
+                    el.innerHTML = `<div><p class="text-slate-700 font-medium">${item.name}</p><p class="text-xs text-slate-500">Estimasi: ${item.duration} menit | Bukti: ${item.evidenceType}</p></div><button onclick="window.deleteItem('tugasTambahan', '${item.id}')" class="text-red-500 hover:text-red-700 font-semibold transition-colors flex-shrink-0 ml-4">Hapus</button>`;
                     extraTaskListEl.appendChild(el);
                 });
             }
             addExtraTaskForm.addEventListener('submit', e => {
                 e.preventDefault();
-                const input = element.querySelector('#new-extra-task-name');
-                if (input.value.trim()) {
-                    mockDatabase.tugasTambahan.push({ id: `tt${Date.now()}`, name: input.value.trim(), duration: 120 }); // Default duration
-                    input.value = '';
+                const nameInput = element.querySelector('#new-extra-task-name');
+                const durationInput = element.querySelector('#new-extra-task-duration');
+                const evidenceInput = element.querySelector('#new-extra-task-evidence');
+                if (nameInput.value.trim() && durationInput.value && evidenceInput.value.trim()) {
+                    mockDatabase.tugasTambahan.push({ id: `tt${Date.now()}`, name: nameInput.value.trim(), duration: parseInt(durationInput.value), evidenceType: evidenceInput.value.trim() });
+                    nameInput.value = '';
+                    durationInput.value = '';
+                    evidenceInput.value = '';
                     refreshExtraTaskList();
                 }
             });
@@ -922,23 +1109,40 @@
         }
 
         function renderProfilSaya(element) {
-             const roleName = userRole.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-             element.innerHTML = `<div class="bg-white p-8 rounded-xl shadow-md max-w-lg mx-auto">
-                <h1 class="text-3xl font-bold mb-6 text-slate-900">Profil Saya</h1>
-                <div class="space-y-4">
-                    <div class="flex items-center gap-4">
-                        <img src="https://placehold.co/64x64/2563eb/ffffff?text=${roleName.charAt(0)}" class="w-16 h-16 rounded-full" alt="Foto Profil">
-                        <div>
-                            <p class="text-xl font-bold text-slate-800">Pengguna Aplikasi</p>
-                            <p class="text-md text-slate-500">${roleName}</p>
+             const profileData = mockDatabase.profiles[userRole] || mockDatabase.profiles.staf; // Default to staf profile
+             element.innerHTML = `
+                <div class="bg-slate-800 text-white p-4 rounded-t-xl shadow-md">
+                    <h1 class="text-xl font-bold">Informasi Pegawai</h1>
+                </div>
+                <div class="bg-white p-8 rounded-b-xl shadow-md">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="flex-shrink-0 text-center">
+                            <img src="https://placehold.co/150x150/dbeafe/3b82f6?text=${profileData.nama.charAt(0)}" class="rounded-full w-36 h-36 mx-auto border-4 border-white shadow-lg" alt="Foto Profil">
+                        </div>
+                        <div class="flex-grow grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 text-sm">
+                            <div><p class="text-slate-500 font-semibold">INSTANSI</p><p class="font-bold text-slate-800">PEMERINTAH PROVINSI KALIMANTAN BARAT</p></div>
+                            <div><p class="text-slate-500 font-semibold">UNIT KERJA</p><p class="font-bold text-slate-800">${profileData.unitKerja}</p></div>
+                            <div><p class="text-slate-500 font-semibold">NIP</p><p class="font-bold text-slate-800">${profileData.nip}</p></div>
+                            <div><p class="text-slate-500 font-semibold">NAMA</p><p class="font-bold text-slate-800">${profileData.nama}</p></div>
+                            <div><p class="text-slate-500 font-semibold">JABATAN / JENJANG</p><p class="font-bold text-slate-800">${profileData.jabatan}</p></div>
+                             <div><p class="text-slate-500 font-semibold">TMT JABATAN</p><p class="font-bold text-slate-800">${profileData.tmtJabatan}</p></div>
+                            <div><p class="text-slate-500 font-semibold">PANGKAT / GOLONGAN RUANG</p><p class="font-bold text-slate-800">${profileData.pangkat}</p></div>
+                             <div><p class="text-slate-500 font-semibold">TMT GOLONGAN</p><p class="font-bold text-slate-800">${profileData.tmtGolongan}</p></div>
+                            <div><p class="text-slate-500 font-semibold">GELAR DEPAN</p><p class="font-bold text-slate-800">${profileData.gelarDepan}</p></div>
+                            <div><p class="text-slate-500 font-semibold">GELAR BELAKANG</p><p class="font-bold text-slate-800">${profileData.gelarBelakang}</p></div>
+                            <div><p class="text-slate-500 font-semibold">JENIS PEGAWAI</p><p class="font-bold text-slate-800">${profileData.jenisPegawai}</p></div>
+                            <div><p class="text-slate-500 font-semibold">JENIS KELAMIN</p><p class="font-bold text-slate-800">${profileData.jenisKelamin}</p></div>
+                            <div class="md:col-span-2"><p class="text-slate-500 font-semibold">DESKRIPSI JABATAN</p><p class="font-bold text-slate-800">${profileData.deskripsiJabatan}</p></div>
                         </div>
                     </div>
-                    <div class="border-t border-slate-200 pt-4">
-                        <p class="text-sm font-medium text-slate-500">User ID (Simulasi)</p>
-                        <p class="text-mono text-sm bg-slate-100 p-2 mt-1 rounded break-all text-slate-600">${userId}</p>
+                    <div class="flex justify-end mt-8">
+                        <button class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-arrows-rotate"></i>
+                            Sinkron SIMPEG
+                        </button>
                     </div>
                 </div>
-            </div>`;
+             `;
         }
 
         // --- NOTIFICATION FUNCTIONS ---
@@ -1026,6 +1230,46 @@
                 revisionComment.value = '';
             });
         }
+        
+        function setupProfileModalListener() {
+            profileModal.addEventListener('click', (e) => {
+                if (e.target.id === 'profile-modal') {
+                    profileModal.classList.add('hidden');
+                }
+            });
+        }
+
+        window.showProfileModal = (profileKey) => {
+            const profileData = mockDatabase.teamMembers[profileKey] || mockDatabase.profiles[profileKey];
+            if (!profileData) {
+                showMessage(`Profil untuk ${profileKey} tidak ditemukan.`);
+                return;
+            }
+            
+            const profileModalContent = document.getElementById('profile-modal-content');
+            profileModalContent.innerHTML = `
+                <div class="bg-slate-800 text-white p-4 rounded-t-xl shadow-md flex justify-between items-center">
+                    <h1 class="text-xl font-bold">Informasi Pegawai</h1>
+                    <button onclick="document.getElementById('profile-modal').classList.add('hidden')" class="p-1 rounded-full hover:bg-slate-700 transition-colors">
+                        <i class="fa-solid fa-times fa-lg"></i>
+                    </button>
+                </div>
+                <div class="bg-white p-8 rounded-b-xl shadow-md">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="flex-shrink-0 text-center">
+                            <img src="https://placehold.co/150x150/dbeafe/3b82f6?text=${profileData.nama.charAt(0)}" class="rounded-full w-36 h-36 mx-auto border-4 border-white shadow-lg" alt="Foto Profil">
+                        </div>
+                        <div class="flex-grow grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 text-sm">
+                            <div><p class="text-slate-500 font-semibold">NIP</p><p class="font-bold text-slate-800">${profileData.nip || '-'}</p></div>
+                            <div><p class="text-slate-500 font-semibold">NAMA</p><p class="font-bold text-slate-800">${profileData.nama || '-'}</p></div>
+                            <div><p class="text-slate-500 font-semibold">JABATAN</p><p class="font-bold text-slate-800">${profileData.jabatan || '-'}</p></div>
+                            <div><p class="text-slate-500 font-semibold">PANGKAT</p><p class="font-bold text-slate-800">${profileData.pangkat || '-'}</p></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            profileModal.classList.remove('hidden');
+        };
 
         window.updateActivityStatus = (docId, newStatus, comment = null) => {
             const activity = mockDatabase.activities.find(a => a.id === docId);
@@ -1064,6 +1308,13 @@
                 activity.evidenceViewed = true;
                 viewEvidence(activity.evidence);
                 renderValidasiAktivitas(document.getElementById('validasi-aktivitas-content'));
+            }
+        }
+
+        window.editActivity = (activityId) => {
+            activityToEdit = mockDatabase.activities.find(a => a.id === activityId);
+            if (activityToEdit) {
+                switchView('tambah-aktivitas-view');
             }
         }
 
