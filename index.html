@@ -1317,6 +1317,103 @@
                 switchView('tambah-aktivitas-view');
             }
         }
+        
+        window.updateReportView = (period) => {
+            const selectedDate = new Date(document.getElementById('report-date').value + 'T00:00:00');
+            const selectedPegawai = document.getElementById('report-pegawai').value;
+
+            let filteredActivities = mockDatabase.activities;
+
+            // Filter by Pegawai
+            if (selectedPegawai !== 'all') {
+                filteredActivities = filteredActivities.filter(a => a.stafName === selectedPegawai);
+            }
+
+            // Filter by Period
+            if (period === 'daily') {
+                filteredActivities = filteredActivities.filter(a => a.createdAt.toDateString() === selectedDate.toDateString());
+            } else if (period === 'weekly') {
+                const startOfWeek = new Date(selectedDate);
+                startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
+                const endOfWeek = new Date(startOfWeek);
+                endOfWeek.setDate(endOfWeek.getDate() + 6);
+                filteredActivities = filteredActivities.filter(a => a.createdAt >= startOfWeek && a.createdAt <= endOfWeek);
+            } else if (period === 'monthly') {
+                filteredActivities = filteredActivities.filter(a => 
+                    a.createdAt.getFullYear() === selectedDate.getFullYear() &&
+                    a.createdAt.getMonth() === selectedDate.getMonth()
+                );
+            }
+
+            // Update KPIs
+            const total = filteredActivities.length;
+            const approved = filteredActivities.filter(a => a.status === 'completed').length;
+            const pending = filteredActivities.filter(a => a.status === 'pending_validation').length;
+            const rejected = filteredActivities.filter(a => a.status === 'needs_revision').length;
+
+            document.getElementById('kpi-total').textContent = total;
+            document.getElementById('kpi-approved').textContent = approved;
+            document.getElementById('kpi-pending').textContent = pending;
+            document.getElementById('kpi-rejected').textContent = rejected;
+
+            const staffStats = {};
+            filteredActivities.forEach(act => {
+                if (!staffStats[act.stafName]) {
+                    staffStats[act.stafName] = { count: 0, duration: 0 };
+                }
+                staffStats[act.stafName].count++;
+                const [startH, startM] = act.startTime.split(':').map(Number);
+                const [endH, endM] = act.endTime.split(':').map(Number);
+                staffStats[act.stafName].duration += (endH * 60 + endM) - (startH * 60 + startM);
+            });
+            
+            let highest = { name: '-', count: 0 };
+            let lowest = { name: '-', percentage: 200 };
+            const targetMinutes = 8.5 * 60;
+
+            if (Object.keys(staffStats).length > 0) {
+                Object.keys(staffStats).forEach(name => {
+                    if(staffStats[name].count > highest.count) {
+                        highest = { name, count: staffStats[name].count };
+                    }
+                    const percentage = (staffStats[name].duration / targetMinutes) * 100;
+                    if (percentage < lowest.percentage) {
+                        lowest = { name, percentage: Math.round(percentage) };
+                    }
+                });
+                document.getElementById('kpi-highest').innerHTML = `<p class="text-lg font-bold text-blue-600">${highest.name}</p><p class="text-xs text-slate-500">${highest.count} Aktivitas</p>`;
+                document.getElementById('kpi-lowest').innerHTML = `<p class="text-lg font-bold text-orange-600">${lowest.name}</p><p class="text-xs text-slate-500">${lowest.percentage}% (${Math.floor(staffStats[lowest.name]?.duration / 60)} jam)</p>`;
+            } else {
+                 document.getElementById('kpi-highest').innerHTML = `<p class="text-lg font-bold text-slate-800">-</p>`;
+                 document.getElementById('kpi-lowest').innerHTML = `<p class="text-lg font-bold text-slate-800">-</p>`;
+            }
+            
+            const progressBarContainer = document.getElementById('progress-bar-container');
+            progressBarContainer.innerHTML = '';
+            if (Object.keys(staffStats).length > 0) {
+                Object.keys(staffStats).forEach(name => {
+                    const stats = staffStats[name];
+                    const percentage = Math.round((stats.duration / targetMinutes) * 100);
+                    const hours = (stats.duration / 60).toFixed(1);
+                    const color = percentage >= 100 ? 'bg-green-500' : (percentage < 50 ? 'bg-red-500' : 'bg-blue-500');
+
+                    progressBarContainer.innerHTML += `
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-base font-medium text-slate-700">${name} (${stats.count} Aktivitas)</span>
+                                <span class="text-sm font-medium ${percentage >= 100 ? 'text-green-700' : 'text-slate-700'}">${percentage}%</span>
+                            </div>
+                            <div class="w-full bg-slate-200 rounded-full h-2.5">
+                                <div class="${color} h-2.5 rounded-full" style="width: ${Math.min(percentage, 100)}%"></div>
+                            </div>
+                            <p class="text-right text-xs text-slate-500 mt-1">${hours} jam dari 8.5 jam target</p>
+                        </div>
+                    `;
+                });
+            } else {
+                progressBarContainer.innerHTML = `<p class="text-center text-slate-500">Tidak ada data untuk periode ini.</p>`;
+            }
+        }
 
         // --- MODAL FUNCTIONS ---
         function showMessage(message) {
